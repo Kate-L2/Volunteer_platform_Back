@@ -6,7 +6,6 @@ const UserSchema = mongoose.Schema({
   email: { type: String, min: 5, max: 50, required: true, unique: true },
   role: { type: String, required: true },
   password: { type: String, required: true },
-  refreshToken: { type: String },
 });
 
 const User = mongoose.model("users", UserSchema);
