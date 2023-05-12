@@ -15,7 +15,6 @@ const verifyJWT = async (req, res, next) => {
   }
   try {
     const decode = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(decode);
     const user = await User.findOne({ _id: decode._id });
     req.user = parseUser(user);
     next();
