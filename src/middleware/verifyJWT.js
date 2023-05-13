@@ -9,18 +9,37 @@ const verifyJWT = async (req, res, next) => {
   const token = req?.headers?.authorization?.split(" ")?.[0];
 
   if (!token) {
-    req.user = null;
-    next();
-    return;
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized",
+    });
   }
+
   try {
-    const decode = jwt.verify(token, process.env.JWT_SECRET);
+    //logic for decode
+    let decode;
+    try {
+      decode = jwt.verify(token, process.env.JWT_SECRET);
+    } catch (e) {
+      decode = null;
+    }
+
+    if (!decode) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized access. Please log in to.",
+      });
+    }
+
+    // get user
     const user = await User.findOne({ _id: decode._id });
     req.user = parseUser(user);
     next();
   } catch (error) {
-    req.user = null;
-    next();
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized",
+    });
   }
 };
 
