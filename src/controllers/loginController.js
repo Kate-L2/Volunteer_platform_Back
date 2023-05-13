@@ -19,7 +19,8 @@ const login = tryCatch(async (req, res) => {
         const accessToken = jwt.sign(
           {
             userId: user._id,
-            firstName: user.firstName,
+            email: user.email,
+            role: user.role,
           },
           process.env.ACCESS_TOKEN_SECRET,
           { expiresIn: "30s" }
@@ -27,7 +28,8 @@ const login = tryCatch(async (req, res) => {
         const refreshToken = jwt.sign(
           {
             userId: user._id,
-            firstName: user.firstName,
+            email: user.email,
+            role: user.role,
           },
           process.env.REFRESH_TOKEN_SECRET,
           { expiresIn: "1h" }

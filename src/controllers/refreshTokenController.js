@@ -4,7 +4,7 @@ import tryCatch from "./utils/tryCatch.js";
 
 const handleRefreshToken = tryCatch(async (req, res) => {
   const cookies = req.cookies;
-  
+
   if (!cookies?.jwt) return res.sendStatus(401);
 
   const refreshToken = cookies.jwt;
@@ -16,12 +16,11 @@ const handleRefreshToken = tryCatch(async (req, res) => {
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET,
       (err, decoded) => {
-        if (err || user.firstName !== decoded.firstName)
-          return res.sendStatus(403);
+        if (err || user.email !== decoded.email) return res.sendStatus(403);
         const accessToken = jwt.sign(
-          { firstname: decoded.firstName },
+          { userId: user._id, email: user.email, role: user.role },
           process.env.ACCESS_TOKEN_SECRET,
-          { expiresIn: "30s" }
+          { expiresIn: "1d" }
         );
         res.json({ accessToken });
       }
