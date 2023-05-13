@@ -1,11 +1,11 @@
 import * as dotenv from "dotenv";
 import express from "express";
 import dbConnect from "./config/db.js";
-import cookieParser from "cookie-parser";
+// import cookieParser from "cookie-parser";
 import loginRouter from "./routes/loginRouter.js";
 import registerRouter from "./routes/registerRouter.js";
-import verifyJWT from "./middleware/verifyJWT.js";
-import refreshRouter from "./routes/refreshRouter.js";
+import currentUserRouter from "./routes/currentUserRouter.js";
+// import verifyJWT from "./middleware/verifyJWT.js";
 import logoutRouter from "./routes/logoutRouter.js";
 import { logger } from "./middleware/logger.js";
 import errorHandler from "./middleware/errorHandler.js";
@@ -32,16 +32,16 @@ app.use((req, res, next) => {
 });
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+// app.use(cookieParser());
 
 app.use("/login", loginRouter);
 app.use("/register", registerRouter);
 app.use("/logout", logoutRouter);
-app.use("/refresh", refreshRouter);
+app.use("/current-user", currentUserRouter);
 
-app.use("/my-resume", myResumeRouter)
+app.use("/my-resume", myResumeRouter);
 
-app.use(verifyJWT);
+// app.use(verifyJWT);
 app.use(errorHandler);
 
 app.listen(8080, () => console.log("Server Started"));
