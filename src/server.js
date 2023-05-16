@@ -10,6 +10,8 @@ import logoutRouter from "./routes/logoutRouter.js";
 import { logger } from "./middleware/logger.js";
 import errorHandler from "./middleware/errorHandler.js";
 import myResumeRouter from "./routes/myResumeRouter.js";
+import categoriesRouter from "./routes/categoriesRouter.js";
+import citiesRouter from "./routes/citiesRouter.js";
 
 dotenv.config();
 
@@ -38,6 +40,8 @@ app.use("/login", loginRouter);
 app.use("/register", registerRouter);
 app.use("/logout", logoutRouter);
 app.use("/current-user", currentUserRouter);
+app.use("/categories", categoriesRouter);
+app.use("/cities", citiesRouter);
 
 app.use("/my-resume", myResumeRouter);
 
