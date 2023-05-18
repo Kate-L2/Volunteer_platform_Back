@@ -7,13 +7,13 @@ const caterories = tryCatch(async (req, res) => {
     .then((categories) => {
       const categoriesCopy = parseObj(categories);
       res.status(200).send({
-        message: "Categories successful",
+        message: "Успіх з категоріями",
         result: categoriesCopy,
       });
     })
     .catch(() => {
       res.status(400).send({
-        message: "Categories error",
+        message: "Помилка в категоріях",
       });
     });
 });

@@ -11,7 +11,7 @@ const verifyJWT = async (req, res, next) => {
   if (!token) {
     return res.status(401).json({
       success: false,
-      message: "Unauthorized",
+      message: "Не авторизований користувач",
     });
   }
 
@@ -27,7 +27,8 @@ const verifyJWT = async (req, res, next) => {
     if (!decode) {
       return res.status(401).json({
         success: false,
-        message: "Unauthorized access. Please log in to.",
+        message:
+          "Не авторизований користувач. Будь ласка увійдіть для доступу до ресурсів.",
       });
     }
 
@@ -38,7 +39,7 @@ const verifyJWT = async (req, res, next) => {
   } catch (error) {
     return res.status(401).json({
       success: false,
-      message: "Unauthorized",
+      message: "Не авторизований користувач",
     });
   }
 };

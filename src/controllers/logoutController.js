@@ -20,7 +20,7 @@ const handleLogout = tryCatch(async (req, res) => {
   res.clearCookie("jwt", { httpOnly: true, secure: true, sameSite: "None" });
 
   res.status(200).send({
-    message: "You have logged out of your account",
+    message: "Ви успішно вийшли з акаунту",
   });
 });
 

@@ -1,7 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import tryCatch from "./utils/tryCatch.js";
-import { ROLES } from "../constants.js";
+// import { ROLES } from "../constants.js";
 import generateJwt from "./utils/generateJwt.js";
 import parseUser from "./utils/parseUser.js";
 
@@ -22,12 +22,15 @@ const register = tryCatch(async (req, res) => {
   if (existedUser) {
     return res
       .status(409)
-      .json({ success: false, message: "You already have an account" });
+      .json({
+        success: false,
+        message: "У вас вже є акаунт. Будь ласка перейдіть на сторінку логіну",
+      });
   }
 
-  if (role !== ROLES.volunteer && role !== ROLES.organization) {
-    return res.status(400).json({ success: false, message: "Incorrect role" });
-  }
+  // if (role !== ROLES.volunteer && role !== ROLES.organization) {
+  //   return res.status(400).json({ success: false, message: "Неправильна роль" });
+  // }
 
   const hashPassword = await bcrypt.hash(password, 12);
 
@@ -48,14 +51,14 @@ const register = tryCatch(async (req, res) => {
       userCopy.token = generateJwt(userCopy);
 
       res.status(201).send({
-        message: "User Created Successfully",
+        message: "Акаунт створено",
         result: userCopy,
       });
     })
     .catch((error) => {
       console.log(error);
       res.status(500).send({
-        message: "Something went wrong during an user creation",
+        message: "Щось пішло не так під час створення акаунту",
         error,
       });
     });

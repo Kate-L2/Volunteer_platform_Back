@@ -6,7 +6,10 @@ const tryCatch = (controller) => {
       console.log(error);
       res
         .status(500)
-        .json({ success: false, message: "Something went wrong! Try again" });
+        .json({
+          success: false,
+          message: "Щось пішло не так! Будь ласка, повторіть спробу",
+        });
     }
   };
 };
