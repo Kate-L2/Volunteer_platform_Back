@@ -1,5 +1,6 @@
 import * as dotenv from "dotenv";
 import express from "express";
+import cors from "cors";
 import dbConnect from "./config/db.js";
 // import cookieParser from "cookie-parser";
 import loginRouter from "./routes/loginRouter.js";
@@ -17,6 +18,7 @@ dotenv.config();
 
 const app = express();
 
+app.use(cors());
 app.use(logger);
 
 app.use((req, res, next) => {
