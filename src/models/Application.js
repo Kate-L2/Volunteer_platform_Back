@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
 
-const ResumeSchema = mongoose.Schema({
-  nickName: { type: String, min: 3, max: 15, required: true },
+const ApplicationSchema = mongoose.Schema({
+  fullName: { type: String, min: 3, max: 15, required: true },
+  dateOfBirth: { type: Date, required: true },
   city: { type: String, required: true },
+  email: { type: String, min: 5, max: 50, required: true, unique: true },
   category: { type: Array, min: 1, max: 4, required: true },
   experience: { type: String, required: true },
   avatar: {
@@ -20,6 +22,6 @@ const ResumeSchema = mongoose.Schema({
   },
 });
 
-const Resume = mongoose.model("resumes", ResumeSchema);
+const Application = mongoose.model("applications", ApplicationSchema);
 
-export default Resume;
+export default Application;
