@@ -6,11 +6,11 @@ const UserSchema = mongoose.Schema({
   email: { type: String, min: 5, max: 50, required: true, unique: true },
   role: { type: String, required: true },
   password: { type: String, min: 8, max: 30, required: true },
-  myResume: {
+  resume: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "resumes",
   },
-  myVacancies: [
+  vacancies: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "vacancies",
