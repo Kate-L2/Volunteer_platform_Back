@@ -21,12 +21,17 @@ const deleteResumeController = tryCatch(async (req, res) => {
       }
 
       return Resume.findByIdAndRemove(resumeId)
+        .populate("city")
+        .populate("categories")
         .then((removedResume) => {
           if (!removedResume) {
             return res.status(404).json({ error: "Резюме не знайдене" });
           }
 
-          return res.status(200).json({ message: "Резюме успішно видалене" });
+          return res.status(200).json({
+            message: "Резюме успішно видалене",
+            result: removedResume,
+          });
         })
         .catch(() => {
           return res.status(500).json({ error: "Не вдалося видалити резюме" });
