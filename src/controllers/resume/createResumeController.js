@@ -1,5 +1,3 @@
-import Category from "../../models/Category.js";
-import City from "../../models/City.js";
 import Resume from "../../models/Resume.js";
 import User from "../../models/User.js";
 import parseObj from "../utils/parseObj.js";
@@ -46,10 +44,15 @@ const createResumeController = tryCatch(async (req, res) => {
         { resume: resumeId },
         { new: true }
       )
-        .then(() => {
+        .populate({
+          path: "resume",
+          populate: [{ path: "city" }, { path: "categories" }],
+        })
+        .exec()
+        .then((updatedUser) => {
           return res.status(200).send({
             message: "Резюме створене успішно!",
-            result: parseObj(savedResume),
+            result: updatedUser.resume,
           });
         })
         .catch((error) => {
