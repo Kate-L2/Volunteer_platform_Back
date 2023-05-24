@@ -2,12 +2,14 @@ import mongoose from "mongoose";
 
 const ResumeSchema = mongoose.Schema({
   nickName: { type: String, min: 3, max: 15, required: true },
-  city: { type: String, required: true },
-  category: { type: Array, min: 1, max: 4, required: true },
   experience: { type: String, required: true },
-  avatar: {
-    data: Buffer,
-    contentType: String,
+  // avatar: {
+  //   data: Buffer,
+  //   contentType: String,
+  // },
+  avatarId: {
+    type: Number,
+    required: true,
   },
   about: { type: String, min: 100, required: true },
   phoneNumber: { type: String, required: true },
@@ -18,6 +20,8 @@ const ResumeSchema = mongoose.Schema({
     youtube: { type: String },
     linkedIn: { type: String },
   },
+  city: { type: mongoose.Schema.Types.ObjectId, ref: "cities" },
+  categories: [{ type: mongoose.Schema.Types.ObjectId, ref: "categories" }],
 });
 
 const Resume = mongoose.model("resumes", ResumeSchema);

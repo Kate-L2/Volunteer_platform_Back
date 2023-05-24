@@ -3,18 +3,21 @@ import mongoose from "mongoose";
 const VacancySchema = mongoose.Schema({
   title: { type: String, min: 10, max: 30, required: true },
   organizators: { type: String, min: 10, max: 100, required: true },
-  category: { type: Array, min: 1, max: 4, required: true },
-  email: { type: String, min: 5, max: 50, required: true, unique: true },
+  email: { type: String, min: 5, max: 50, required: true },
   startEventDate: { type: Date, required: true },
   endEventDate: { type: Date, required: true },
   applicationDeadline: { type: Date, required: true },
   online: { type: Boolean },
-  city: { type: String },
   address: { type: String, min: 3, max: 100 },
   image: {
     data: Buffer,
     contentType: String,
+    required: true,
   },
+  // imageId: {
+  //   type: Number,
+  //   required: true,
+  // },
   description: { type: String, min: 100, required: true },
   website: { type: String },
   socials: {
@@ -30,6 +33,8 @@ const VacancySchema = mongoose.Schema({
       ref: "applications",
     },
   ],
+  city: { type: mongoose.Schema.Types.ObjectId, ref: "cities" },
+  category: { type: mongoose.Schema.Types.ObjectId, ref: "categories" },
 });
 
 const Vacancy = mongoose.model("vacancies", VacancySchema);

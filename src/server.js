@@ -9,9 +9,9 @@ import currentUserRouter from "./routes/currentUserRouter.js";
 // import verifyJWT from "./middleware/verifyJWT.js";
 import { logger } from "./middleware/logger.js";
 import errorHandler from "./middleware/errorHandler.js";
-import myResumeRouter from "./routes/myResumeRouter.js";
 import categoriesRouter from "./routes/categoriesRouter.js";
 import citiesRouter from "./routes/citiesRouter.js";
+import resumeRouter from "./routes/resumeRouter.js";
 
 dotenv.config();
 
@@ -43,7 +43,7 @@ app.use("/current-user", currentUserRouter);
 app.use("/categories", categoriesRouter);
 app.use("/cities", citiesRouter);
 
-app.use("/my-resume", myResumeRouter);
+app.use("/", resumeRouter);
 
 // app.use(verifyJWT);
 app.use(errorHandler);
