@@ -8,6 +8,12 @@ const resumeController = tryCatch(async (req, res) => {
       .populate("city")
       .populate("categories");
 
+    if (!resume) {
+      return res.status(404).send({
+        message: "Резюме не знайдено",
+      });
+    }
+
     return res.status(200).send({
       message: "Моє резюме. Успіх",
       result: parseObj(resume),

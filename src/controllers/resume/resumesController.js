@@ -13,7 +13,7 @@ const resumeByIdController = tryCatch(async (req, res) => {
     .populate("city")
     .populate("categories")
     .then((resumes) => {
-      if (!resumes) {
+      if (!resumes || resumes.length === 0) {
         return res.status(404).send({
           message: "Резюме не знайдені",
         });
