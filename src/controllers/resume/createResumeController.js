@@ -22,13 +22,11 @@ const createResumeController = tryCatch(async (req, res) => {
     about,
     phoneNumber,
     socials,
-    // city: currentCity,
-    // categories: currentCategories,
     city,
     categories,
   });
 
-  if (req.user.resume) {
+  if (req?.user?.resume) {
     return res.status(400).send({
       message: "Резюме вже існує",
     });

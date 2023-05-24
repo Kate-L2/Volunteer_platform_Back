@@ -3,7 +3,7 @@ import User from "../../models/User.js";
 import tryCatch from "../utils/tryCatch.js";
 
 const deleteResumeController = tryCatch(async (req, res) => {
-  if (!req.user.resume) {
+  if (!req?.user?.resume) {
     return res.status(400).send({
       message: "Резюме не існує",
     });
