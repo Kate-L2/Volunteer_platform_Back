@@ -6,29 +6,28 @@ import tryCatch from "../utils/tryCatch.js";
 const createResumeController = tryCatch(async (req, res) => {
   const {
     nickName,
+    city,
+    categories,
     experience,
     avatarId,
     about,
     phoneNumber,
     socials,
-    city,
-    categories,
   } = req.body;
 
   const newResume = await Resume.create({
     nickName,
+    city,
+    categories,
     experience,
     avatarId,
     about,
     phoneNumber,
     socials,
-    // city: currentCity,
-    // categories: currentCategories,
-    city,
-    categories,
   });
+  console.log(newResume);
 
-  if (req.user.resume) {
+  if (req?.user?.resume) {
     return res.status(400).send({
       message: "Резюме вже існує",
     });
@@ -45,7 +44,7 @@ const createResumeController = tryCatch(async (req, res) => {
         { new: true }
       )
         .populate({
-          path: "resume",
+          path: "resumes",
           populate: [{ path: "city" }, { path: "categories" }],
         })
         .exec()

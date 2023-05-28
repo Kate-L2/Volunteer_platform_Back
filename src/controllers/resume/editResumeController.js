@@ -1,8 +1,13 @@
 import Resume from "../../models/Resume.js";
-import User from "../../models/User.js";
 import tryCatch from "../utils/tryCatch.js";
 
 const editResumeController = tryCatch(async (req, res) => {
+  if (!req?.user?.resume) {
+    return res.status(404).send({
+      message: "Резюме не знайдено",
+    });
+  }
+
   const {
     nickName,
     experience,

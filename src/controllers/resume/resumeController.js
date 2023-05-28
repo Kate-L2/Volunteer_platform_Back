@@ -3,10 +3,16 @@ import parseObj from "../utils/parseObj.js";
 import tryCatch from "../utils/tryCatch.js";
 
 const resumeController = tryCatch(async (req, res) => {
-  if (req.user.resume) {
+  if (req?.user?.resume) {
     const resume = await Resume.findById(req.user.resume)
       .populate("city")
       .populate("categories");
+
+    if (!resume) {
+      return res.status(404).send({
+        message: "Резюме не знайдено",
+      });
+    }
 
     return res.status(200).send({
       message: "Моє резюме. Успіх",

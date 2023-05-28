@@ -9,7 +9,6 @@ const resumeByIdController = tryCatch(async (req, res) => {
     .populate("city")
     .populate("categories")
     .then((resume) => {
-      console.log(resume);
       if (!resume) {
         return res.status(404).send({
           message: "Резюме не знайдено",
