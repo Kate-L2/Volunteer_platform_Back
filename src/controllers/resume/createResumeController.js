@@ -24,13 +24,7 @@ const createResumeController = tryCatch(async (req, res) => {
     about,
     phoneNumber,
     socials,
-<<<<<<< HEAD
-=======
-    city,
-    categories,
->>>>>>> db9a4773834057efa830cdaa2caf6501a2515a89
   });
-  console.log(newResume);
 
   if (req?.user?.resume) {
     return res.status(400).send({
