@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const ResumeSchema = mongoose.Schema({
   nickName: { type: String, min: 3, max: 15, required: true },
-  city: { type: String, ref: "cities" },
-  categories: [{ type: Array, ref: "categories" }],
+  city: { type: mongoose.Schema.Types.ObjectId, ref: "cities" },
+  categories: [{ type: mongoose.Schema.Types.ObjectId, ref: "categories" }],
   experience: { type: String, required: true },
   avatarId: {
     type: Number,

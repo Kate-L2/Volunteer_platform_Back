@@ -43,7 +43,7 @@ const createResumeController = tryCatch(async (req, res) => {
         { new: true }
       )
         .populate({
-          path: "resumes",
+          path: "resume",
           populate: [{ path: "city" }, { path: "categories" }],
         })
         .exec()
