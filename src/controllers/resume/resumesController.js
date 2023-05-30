@@ -15,11 +15,15 @@ const resumeByIdController = tryCatch(async (req, res) => {
   }
 
   if (req.query?.categories) {
-    filters.categories = { $in: req.query.categories };
+    filters.categories = { $in: req.query.categories.split(",") };
   }
 
   if (req.query?.search) {
     filters.nickName = { $regex: req.query.search, $options: "i" };
+  }
+
+  if (req.query?.experience) {
+    filters.experience = { $regex: req.query.experience, $options: "i" };
   }
 
   // find
