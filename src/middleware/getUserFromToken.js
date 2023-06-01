@@ -7,7 +7,6 @@ dotenv.config();
 
 const getUserFromToken = async (req, res, next) => {
   const token = req?.headers?.authorization?.split(" ")?.[0];
-
   if (!token) {
     req.user = null;
     return next();

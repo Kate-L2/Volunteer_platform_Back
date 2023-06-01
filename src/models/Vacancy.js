@@ -9,11 +9,10 @@ const VacancySchema = mongoose.Schema({
   applicationDeadline: { type: Date, required: true },
   online: { type: Boolean },
   address: { type: String, min: 3, max: 100 },
-  //TODO
-  // img: {
-  //   data: { type: Buffer, required: true },
-  //   contentType: { type: String, required: true },
-  // },
+  img: {
+    data: { type: Buffer, required: true },
+    contentType: { type: String, required: true },
+  },
   description: { type: String, min: 100, required: true },
   website: { type: String },
   socials: {

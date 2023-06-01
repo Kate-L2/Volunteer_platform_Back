@@ -13,8 +13,8 @@ import vacancyByIdController from "../controllers/vacancies/vacancyByIdControlle
 const vacancyRouter = express.Router();
 
 // public
-vacancyRouter.get("/vacancy/:id", vacancyByIdController);
 vacancyRouter.use(getUserFromToken);
+vacancyRouter.get("/vacancy/:id", vacancyByIdController);
 vacancyRouter.get("/all-vacancies", allVacanciesController);
 
 // private
