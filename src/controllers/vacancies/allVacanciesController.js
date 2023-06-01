@@ -35,8 +35,6 @@ const allVacanciesController = tryCatch(async (req, res) => {
   Vacancy.find(filters)
     .populate("city")
     .populate("categories")
-    // TODO
-    // .populate("appliedApplications")
     .then((vacancies) => {
       if (!vacancies || vacancies.length === 0) {
         return res.status(404).send({

@@ -61,8 +61,6 @@ const editVacancyController = tryCatch(async (req, res) => {
   )
     .populate("city")
     .populate("categories")
-    // TODO
-    // .populate("appliedApplications");
     .then((updatedVacancy) => {
       if (!updatedVacancy) {
         return res.status(400).send({

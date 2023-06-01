@@ -1,3 +1,4 @@
+import Application from "../../models/Application.js";
 import User from "../../models/User.js";
 import Vacancy from "../../models/Vacancy.js";
 import tryCatch from "../utils/tryCatch.js";
@@ -39,29 +40,31 @@ const deleteVacancyController = tryCatch(async (req, res) => {
           .json({ message: "Не вдалося знайти користувача" });
       }
 
-      return (
-        Vacancy.findByIdAndRemove(vacancyId)
-          .populate("city")
-          .populate("categories")
-          .populate("categories")
-          // TODO
-          // .populate("appliedApplications");
-          .then((removedVacancy) => {
-            if (!removedVacancy) {
-              return res.status(404).json({ error: "Вакансія не знайдена" });
-            }
-            // TODO: видаляти також заявки при видаленні вакансії
-            return res.status(200).json({
-              message: "Вакансія успішно видалена",
-              result: removedVacancy,
+      return Vacancy.findByIdAndRemove(vacancyId)
+        .populate("city")
+        .populate("categories")
+        .then(async (removedVacancy) => {
+          if (!removedVacancy) {
+            return res.status(404).json({ error: "Вакансія не знайдена" });
+          }
+
+          // remove applications of vacancy
+          if (removedVacancy.appliedApplications.length > 0) {
+            await Application.deleteMany({
+              _id: { $in: removedVacancy.appliedApplications },
             });
-          })
-          .catch(() => {
-            return res
-              .status(500)
-              .json({ error: "Не вдалося видалити вакансію" });
-          })
-      );
+          }
+
+          return res.status(200).json({
+            message: "Вакансія успішно видалена",
+            result: removedVacancy,
+          });
+        })
+        .catch(() => {
+          return res
+            .status(500)
+            .json({ error: "Не вдалося видалити вакансію" });
+        });
     })
     .catch(() => {
       return res.status(500).json({ error: "Не вдалося оновити користувача" });

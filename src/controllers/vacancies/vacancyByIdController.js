@@ -7,8 +7,8 @@ const vacancyByIdController = tryCatch(async (req, res) => {
   Vacancy.findById(vacancyId)
     .populate("city")
     .populate("categories")
-    // TODO
-    // .populate("appliedApplications")
+    .populate("appliedApplications")
+
     .then((vacancy) => {
       if (!vacancy) {
         return res.status(404).send({

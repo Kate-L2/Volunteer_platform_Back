@@ -6,8 +6,6 @@ const vacanciesController = tryCatch(async (req, res) => {
     const vacancies = await Vacancy.find({ _id: { $in: req.user.vacancies } })
       .populate("city")
       .populate("categories");
-    // TODO
-    // .populate("appliedApplications");
 
     if (!vacancies || vacancies.length === 0) {
       return res.status(404).send({
