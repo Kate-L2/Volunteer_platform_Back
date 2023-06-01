@@ -9,7 +9,6 @@ const getUserFromToken = async (req, res, next) => {
   const token = req?.headers?.authorization?.split(" ")?.[0];
 
   if (!token) {
-    console.log("token");
     req.user = null;
     return next();
   }
@@ -33,7 +32,6 @@ const getUserFromToken = async (req, res, next) => {
     req.user = parseUser(user);
     next();
   } catch (error) {
-    console.log("lol");
     req.user = null;
     return next();
   }

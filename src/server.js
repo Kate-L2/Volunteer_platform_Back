@@ -12,6 +12,7 @@ import errorHandler from "./middleware/errorHandler.js";
 import categoriesRouter from "./routes/categoriesRouter.js";
 import citiesRouter from "./routes/citiesRouter.js";
 import resumeRouter from "./routes/resumeRouter.js";
+import vacancyRouter from "./routes/vacancyRouter.js";
 
 dotenv.config();
 
@@ -44,6 +45,7 @@ app.use("/categories", categoriesRouter);
 app.use("/cities", citiesRouter);
 
 app.use("/", resumeRouter);
+app.use("/", vacancyRouter);
 
 // app.use(verifyJWT);
 app.use(errorHandler);
