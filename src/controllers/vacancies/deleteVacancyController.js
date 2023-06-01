@@ -50,9 +50,9 @@ const deleteVacancyController = tryCatch(async (req, res) => {
             if (!removedVacancy) {
               return res.status(404).json({ error: "Вакансія не знайдена" });
             }
-
+            // TODO: видаляти також заявки при видаленні вакансії
             return res.status(200).json({
-              message: "Вакансія успішно видалене",
+              message: "Вакансія успішно видалена",
               result: removedVacancy,
             });
           })

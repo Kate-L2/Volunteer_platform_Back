@@ -16,6 +16,7 @@ const vacancyByIdController = tryCatch(async (req, res) => {
         });
       }
 
+      // TODO: додати поле alreadyApplicated
       return res.status(200).send({
         message: "Вакансію отримано. Успіх",
         result: vacancy,
