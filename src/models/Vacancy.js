@@ -10,9 +10,8 @@ const VacancySchema = mongoose.Schema({
   online: { type: Boolean },
   address: { type: String, min: 3, max: 100 },
   img: {
-    data: Buffer,
-    contentType: String,
-    required: true,
+    data: { type: Buffer, required: true },
+    contentType: { type: String, required: true },
   },
   description: { type: String, min: 100, required: true },
   website: { type: String },
@@ -29,7 +28,7 @@ const VacancySchema = mongoose.Schema({
       ref: "applications",
     },
   ],
-  categories: { type: mongoose.Schema.Types.ObjectId, ref: "categories" },
+  categories: [{ type: mongoose.Schema.Types.ObjectId, ref: "categories" }],
   city: { type: mongoose.Schema.Types.ObjectId, ref: "cities" },
 });
 

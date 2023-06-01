@@ -19,7 +19,7 @@ const editResumeController = tryCatch(async (req, res) => {
     categories,
   } = req.body;
 
-  const newResume = await Resume.findOneAndUpdate(
+  await Resume.findOneAndUpdate(
     { _id: req.user.resume },
     {
       nickName,
@@ -53,7 +53,6 @@ const editResumeController = tryCatch(async (req, res) => {
       console.log(e);
       return res.status(400).send({
         message: "Помилка в оновленні резюме",
-        result: updatedResume,
       });
     });
 });

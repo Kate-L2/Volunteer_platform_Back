@@ -18,8 +18,11 @@ resumeRouter.use(getUserFromToken);
 resumeRouter.get("/resumes", resumesController);
 
 // private
-resumeRouter.use(verifyJWT);
-resumeRouter.use(verifyRole(ROLES.volunteer));
+
+// set specific route for middlewares
+resumeRouter.use("/resume", verifyJWT);
+resumeRouter.use("/resume", verifyRole(ROLES.volunteer));
+
 resumeRouter.get("/resume", resumeController);
 resumeRouter.post("/resume", createResumeController);
 resumeRouter.delete("/resume", deleteResumeController);

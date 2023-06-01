@@ -1,14 +1,11 @@
 import mongoose from "mongoose";
 
 const ApplicationSchema = mongoose.Schema({
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "users", required: true },
   fullName: { type: String, min: 3, max: 15, required: true },
   dateOfBirth: { type: Date, required: true },
   email: { type: String, min: 5, max: 50, required: true },
   experience: { type: String, required: true },
-  // avatar: {
-  //   data: Buffer,
-  //   contentType: String,
-  // },
   avatarId: {
     type: Number,
     required: true,
