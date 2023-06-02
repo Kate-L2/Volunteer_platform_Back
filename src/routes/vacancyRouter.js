@@ -9,8 +9,10 @@ import editVacancyController from "../controllers/vacancies/editVacancyControlle
 import vacanciesController from "../controllers/vacancies/vacanciesController.js";
 import allVacanciesController from "../controllers/vacancies/allVacanciesController.js";
 import vacancyByIdController from "../controllers/vacancies/vacancyByIdController.js";
+import multer from "multer";
 
 const vacancyRouter = express.Router();
+const upload = multer();
 
 // public
 vacancyRouter.use(getUserFromToken);
@@ -21,7 +23,7 @@ vacancyRouter.get("/all-vacancies", allVacanciesController);
 vacancyRouter.use(verifyJWT);
 vacancyRouter.use(verifyRole(ROLES.organization));
 vacancyRouter.get("/vacancies", vacanciesController);
-vacancyRouter.post("/vacancy", createVacancyController);
+vacancyRouter.post("/vacancy", upload.single("img"), createVacancyController);
 vacancyRouter.delete("/vacancy", deleteVacancyController);
 vacancyRouter.patch("/vacancy", editVacancyController);
 

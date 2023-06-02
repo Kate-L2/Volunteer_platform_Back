@@ -1,10 +1,10 @@
-import Resume from "../../models/Resume.js";
 import User from "../../models/User.js";
 import Vacancy from "../../models/Vacancy.js";
-import parseObj from "../utils/parseObj.js";
 import tryCatch from "../utils/tryCatch.js";
 
 const createVacancyController = tryCatch(async (req, res) => {
+  const img = req.file;
+
   const {
     title,
     organizators,
@@ -14,14 +14,14 @@ const createVacancyController = tryCatch(async (req, res) => {
     applicationDeadline,
     online,
     address,
-    img,
     description,
     website,
     categories,
     city,
+    socials,
   } = req.body;
 
-  const newVacancy = await Vacancy.create({
+  const createEntity = {
     title,
     organizators,
     email,
@@ -29,15 +29,24 @@ const createVacancyController = tryCatch(async (req, res) => {
     endDate,
     applicationDeadline,
     online,
-    address,
-    img,
+    socials: JSON.parse(socials),
+    img: {
+      contentType: img.mimetype,
+      data: img.buffer,
+    },
     description,
     website,
-    categories,
-    city,
+    categories: JSON.parse(categories),
     // empty by default
     appliedApplications: [],
-  });
+  };
+
+  if (!online) {
+    createEntity.city = JSON.parse(city);
+    createEntity.address = address;
+  }
+
+  const newVacancy = await Vacancy.create(createEntity);
 
   newVacancy
     .save()
