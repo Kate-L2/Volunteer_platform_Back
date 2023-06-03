@@ -9,7 +9,7 @@ const editVacancyController = tryCatch(async (req, res) => {
   }
   const img = req.file;
 
-  const {
+  let {
     title,
     organizators,
     email,
@@ -25,6 +25,8 @@ const editVacancyController = tryCatch(async (req, res) => {
     socials,
     id: vacancyId,
   } = req.body;
+
+  online = JSON.parse(online);
 
   if (!vacancyId) {
     return res.status(400).json({ message: "Необхідно передати id вакансії" });
@@ -59,7 +61,6 @@ const editVacancyController = tryCatch(async (req, res) => {
     description,
     website,
     categories: JSON.parse(categories),
-    appliedApplications: [],
   };
 
   if (!online) {
@@ -67,7 +68,7 @@ const editVacancyController = tryCatch(async (req, res) => {
     editEntity.address = address;
   } else {
     delete editEntity.city;
-    editEntity.address;
+    delete editEntity.address;
   }
 
   await Vacancy.findOneAndUpdate({ _id: vacancyId }, editEntity, {
