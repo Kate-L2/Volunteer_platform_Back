@@ -1,6 +1,6 @@
-import Vacancy from "../models/Vacancy.js";
-import Application from "../models/Application.js";
-import tryCatch from "./utils/tryCatch.js";
+import Application from "../../models/Application.js";
+import Vacancy from "../../models/Vacancy.js";
+import tryCatch from "../utils/tryCatch.js";
 
 const createApplicationController = tryCatch(async (req, res) => {
   const {
@@ -42,6 +42,12 @@ const createApplicationController = tryCatch(async (req, res) => {
   );
   if (!vacancy) {
     return res.status(400).json({ message: "Вакансія з таким id не знайдена" });
+  }
+
+  if (new Date().getTime() > new Date(vacancy.applicationDeadline).getTime()) {
+    return res.status(400).json({
+      message: "Дедлайн для подачі заявок для вакансії вже закінчився",
+    });
   }
 
   if (

@@ -19,7 +19,7 @@ const allVacanciesController = tryCatch(async (req, res) => {
   }
 
   if (req.query?.search) {
-    filters.nickName = { $regex: req.query.search, $options: "i" };
+    filters.title = { $regex: req.query.search, $options: "i" };
   }
 
   if (req.query?.startDate) {

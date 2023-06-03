@@ -25,6 +25,6 @@ vacancyRouter.use(verifyRole(ROLES.organization));
 vacancyRouter.get("/vacancies", vacanciesController);
 vacancyRouter.post("/vacancy", upload.single("img"), createVacancyController);
 vacancyRouter.delete("/vacancy", deleteVacancyController);
-vacancyRouter.patch("/vacancy", editVacancyController);
+vacancyRouter.patch("/vacancy", upload.single("img"), editVacancyController);
 
 export default vacancyRouter;

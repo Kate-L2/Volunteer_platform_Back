@@ -5,7 +5,7 @@ import tryCatch from "../utils/tryCatch.js";
 const createVacancyController = tryCatch(async (req, res) => {
   const img = req.file;
 
-  const {
+  let {
     title,
     organizators,
     email,
@@ -20,6 +20,15 @@ const createVacancyController = tryCatch(async (req, res) => {
     city,
     socials,
   } = req.body;
+  online = JSON.parse(online);
+
+  if (!online) {
+    if (!city || !address) {
+      return res.status(400).send({
+        message: "Поля 'місто' та 'адреса' обовʼязкові",
+      });
+    }
+  }
 
   const createEntity = {
     title,
@@ -41,10 +50,14 @@ const createVacancyController = tryCatch(async (req, res) => {
     appliedApplications: [],
   };
 
+  console.log(online, typeof online);
+
   if (!online) {
     createEntity.city = JSON.parse(city);
     createEntity.address = address;
   }
+
+  console.log("--->", createEntity);
 
   const newVacancy = await Vacancy.create(createEntity);
 

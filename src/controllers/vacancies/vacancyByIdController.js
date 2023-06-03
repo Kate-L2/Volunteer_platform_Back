@@ -9,7 +9,10 @@ const vacancyByIdController = tryCatch(async (req, res) => {
   Vacancy.findById(vacancyId)
     .populate("city")
     .populate("categories")
-    .populate("appliedApplications")
+    .populate({
+      path: "appliedApplications",
+      populate: [{ path: "city" }, { path: "categories" }],
+    })
     .then((vacancy) => {
       if (!vacancy) {
         return res.status(404).send({
@@ -23,11 +26,17 @@ const vacancyByIdController = tryCatch(async (req, res) => {
       };
 
       // change field alreadyApplicated on true if user has already sent application
+      //TODO check on date of died application
+      const applicationDeadlineIsAlready =
+        new Date().getTime() > new Date(vacancy.applicationDeadline).getTime();
+
       if (
-        vacancy.appliedApplications.length > 0 &&
-        vacancy.appliedApplications.find(
-          (appliedApplication) => appliedApplication.user.toString() === userId
-        )
+        (vacancy.appliedApplications.length > 0 &&
+          vacancy.appliedApplications.find(
+            (appliedApplication) =>
+              appliedApplication.user.toString() === userId
+          )) ||
+        applicationDeadlineIsAlready
       ) {
         result.alreadyApplicated = true;
       }

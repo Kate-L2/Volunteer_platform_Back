@@ -7,6 +7,7 @@ const editVacancyController = tryCatch(async (req, res) => {
       message: "Вакансії не знайдено",
     });
   }
+  const img = req.file;
 
   const {
     title,
@@ -17,11 +18,11 @@ const editVacancyController = tryCatch(async (req, res) => {
     applicationDeadline,
     online,
     address,
-    img,
     description,
     website,
     categories,
     city,
+    socials,
     id: vacancyId,
   } = req.body;
 
@@ -40,25 +41,38 @@ const editVacancyController = tryCatch(async (req, res) => {
       .json({ message: "Недостатньо прав для редагування" });
   }
 
-  await Vacancy.findOneAndUpdate(
-    { _id: vacancyId },
-    {
-      title,
-      organizators,
-      email,
-      startDate,
-      endDate,
-      applicationDeadline,
-      online,
-      address,
-      img,
-      description,
-      website,
-      categories,
-      city,
-    },
-    { new: true }
-  )
+  const editEntity = {
+    title,
+    organizators,
+    email,
+    startDate,
+    endDate,
+    applicationDeadline,
+    online,
+    socials: JSON.parse(socials),
+    img: img
+      ? {
+          contentType: img.mimetype,
+          data: img.buffer,
+        }
+      : undefined,
+    description,
+    website,
+    categories: JSON.parse(categories),
+    appliedApplications: [],
+  };
+
+  if (!online) {
+    editEntity.city = JSON.parse(city);
+    editEntity.address = address;
+  } else {
+    delete editEntity.city;
+    editEntity.address;
+  }
+
+  await Vacancy.findOneAndUpdate({ _id: vacancyId }, editEntity, {
+    new: true,
+  })
     .populate("city")
     .populate("categories")
     .then((updatedVacancy) => {
