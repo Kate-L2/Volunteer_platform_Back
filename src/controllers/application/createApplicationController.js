@@ -67,7 +67,7 @@ const createApplicationController = tryCatch(async (req, res) => {
       const applicationId = savedApplication?._id;
 
       if (!applicationId) {
-        return res.status(400).json({ message: "Не вийшло зберігти заявку" });
+        return res.status(400).json({ message: "Не вийшло зберегти заявку" });
       }
 
       Vacancy.findOneAndUpdate(
@@ -82,7 +82,7 @@ const createApplicationController = tryCatch(async (req, res) => {
         .exec()
         .then((updatedVacancy) => {
           return res.status(200).send({
-            message: "Заявка створена успішно!",
+            message: "Заявка відправлено успішно!",
             result: updatedVacancy.appliedApplications.find(
               (appliedApplication) =>
                 appliedApplication._id.toString() === applicationId.toString()

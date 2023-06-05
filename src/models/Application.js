@@ -11,7 +11,7 @@ const ApplicationSchema = mongoose.Schema({
     required: true,
   },
   about: { type: String, min: 100, required: true },
-  phoneNumber: { type: String, required: true },
+  phoneNumber: { type: String },
   socials: {
     facebook: { type: String },
     instagram: { type: String },

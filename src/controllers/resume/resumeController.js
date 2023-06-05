@@ -10,7 +10,7 @@ const resumeController = tryCatch(async (req, res) => {
 
     if (!resume) {
       return res.status(404).send({
-        message: "Резюме не знайдено",
+        // message: "Резюме не знайдено",
       });
     }
 
@@ -20,7 +20,7 @@ const resumeController = tryCatch(async (req, res) => {
     });
   } else {
     return res.status(404).send({
-      message: "Резюме не знайдено",
+      // message: "Резюме не знайдено",
     });
   }
 });
